@@ -215,30 +215,35 @@ acceptedTypes=".pdf"
 
 ## 🎨 Key Interface Screenshots
 
-### 1. Application Overview Dashboard
+### 1. Overview Dashboard
 
-![Dashboard Overview](https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=500&fit=crop)
+![Dashboard Overview]<img width="1341" height="643" alt="Screenshot 2025-07-20 at 2 26 41 PM" src="https://github.com/user-attachments/assets/0300d23c-b0b1-43ad-92f2-d74aaeef80ec" />
+
 _Main dashboard with feature cards and navigation_
 
 ### 2. Multi-Step Application Form
 
-![Application Form](https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=500&fit=crop)
+![Application Form]<img width="1330" height="815" alt="Screenshot 2025-07-20 at 2 27 42 PM" src="https://github.com/user-attachments/assets/3706a37f-5ecb-4777-9c0f-70e60c4a9edc" />
+
 _Step-by-step application form with progress tracking_
 
 ### 3. AI Assistant Interface
 
-![AI Assistant](https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=500&fit=crop)
+![AI Assistant]<img width="1350" height="814" alt="Screenshot 2025-07-20 at 2 32 49 PM" src="https://github.com/user-attachments/assets/9991f8dc-a6b6-4abe-88af-99d7735e97cf" />
+
 _AI-powered chat interface with message history_
 
 ### 4. Video Tutorial Player
 
-![Video Tutorials](https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop)
+![Video Tutorials]<img width="1411" height="813" alt="Screenshot 2025-07-20 at 2 28 40 PM" src="https://github.com/user-attachments/assets/31aab9cc-7315-4188-846e-9b0f0520daad" />
+
 _Interactive video player with note-taking capabilities_
 
-### 5. Dark Mode Interface
+### 5. Light Mode Interface
 
-![Dark Mode](https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&h=500&fit=crop)
-_Full dark mode support with theme toggle_
+![Light Mode]<img width="1297" height="626" alt="Screenshot 2025-07-20 at 2 34 11 PM" src="https://github.com/user-attachments/assets/3a52ab0d-6fde-427e-aeb1-33e8eb3b0904" />
+
+_Full light mode support with theme toggle_
 
 ## 🔧 Custom Hooks
 
