@@ -2,6 +2,8 @@
 
 A comprehensive React-based college application portal with AI assistance, video tutorials, and streamlined application management. Built with Next.js, TypeScript, and Tailwind CSS.
 
+Live Demo https://college-application-portal.netlify.app/)
+
 ## 🚀 Features
 
 ### ✅ Core Features Completed
