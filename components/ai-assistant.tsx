@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useChat } from "ai/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,15 +9,55 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { MessageSquare, Send, Search, Trash2 } from "lucide-react";
 import { useChatHistory } from "@/hooks/use-chat-history";
-import ReactMarkdown from "react-markdown";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import type { Message } from "ai";
 
 export function AIAssistant() {
+  const [initialMessages, setInitialMessages] = useState<Message[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Load initial messages from localStorage
+  useEffect(() => {
+    const savedHistory = localStorage.getItem("chatHistory");
+    if (savedHistory) {
+      try {
+        const parsedHistory = JSON.parse(savedHistory);
+        setInitialMessages(parsedHistory);
+      } catch (error) {
+        console.error("Error loading initial chat history:", error);
+        setInitialMessages([]);
+      }
+    }
+    setIsInitialized(true);
+  }, []);
+
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat();
+    useChat({
+      initialMessages: initialMessages,
+    });
+
   const { searchHistory, clearHistory } = useChatHistory(messages);
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredMessages = searchQuery ? searchHistory(searchQuery) : messages;
+
+  // Don't render until we've loaded the initial messages
+  if (!isInitialized) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3">
+          <Card className="h-[600px] flex flex-col">
+            <CardContent className="flex-1 flex items-center justify-center">
+              <div className="text-center text-muted-foreground">
+                <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>Loading chat history...</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -39,7 +79,12 @@ export function AIAssistant() {
                     className="pl-8 w-48"
                   />
                 </div>
-                <Button onClick={clearHistory} variant="outline" size="sm">
+                <Button
+                  onClick={clearHistory}
+                  variant="outline"
+                  size="sm"
+                  title="Clear chat history"
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -84,9 +129,7 @@ export function AIAssistant() {
                       }`}
                     >
                       {message.role === "assistant" ? (
-                        <div className="prose prose-sm dark:prose-invert">
-                          {message.content}
-                        </div>
+                        <MarkdownRenderer content={message.content} />
                       ) : (
                         <p>{message.content}</p>
                       )}
@@ -226,9 +269,38 @@ export function AIAssistant() {
                   {messages.filter((m) => m.role === "user").length}
                 </Badge>
               </div>
+              <div className="flex justify-between">
+                <span className="text-sm">AI Responses:</span>
+                <Badge variant="secondary">
+                  {messages.filter((m) => m.role === "assistant").length}
+                </Badge>
+              </div>
             </div>
           </CardContent>
         </Card>
+
+        {messages.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Recent Topics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-1">
+                {messages
+                  .filter((m) => m.role === "user")
+                  .slice(-3)
+                  .map((message, index) => (
+                    <p
+                      key={index}
+                      className="text-xs text-muted-foreground truncate"
+                    >
+                      • {message.content.substring(0, 40)}...
+                    </p>
+                  ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
